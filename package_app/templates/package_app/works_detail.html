@@ -1,0 +1,27 @@
+{% extends 'package_app/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1>package details of  {{works.work_type}} is below: </h1>
+      {% if works.rnworks.all %}
+      <ol>
+        {% for items in works.rnworks.all %}
+        <li>Package No: {{items.package_no}}</li>
+        <ul>
+          <li>Package No: {{items.package_no}}</li>
+          <li>Package Name:{{items.package_name}} </li>
+          <li>Estimated Cost: {{items.estimate_value}} BDT</li>
+          <li>Contract Value: {{items.contract_value}} BDT</li>
+          <li>Name of Contractor: {{items.contractor_name}}</li>
+          <li>Less or Above: {{items.less_above}}</li>
+          <li>Bill Paid: {{items.total_expense}} BDT</li>
+        </ul>
+        {% endfor %}
+      </ol>
+      {% else %}
+        <h1> No data found </h1>
+    </div>
+  </div>
+      {% endif %}
+
+{% endblock %}

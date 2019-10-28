@@ -1,0 +1,20 @@
+{% extends "package_app/base.html" %}
+
+{% load bootstrap4 %}
+
+{% block body_block %}
+
+<h1>
+  {% if not form.instances.pk %}
+  Create Packages
+  {% else %}
+  Update Packages
+  {%endif%}
+</h1>
+
+<form method="POST" }">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	<button type="submit" class="btn btn-primary btn-large">Post</button>
+</form>
+{% endblock %}

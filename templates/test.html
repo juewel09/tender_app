@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block body_block %}
+
+<div class="container">
+  <h1>You are now logged in!</h1>
+</div>
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>Welcome to the procurment Project </h1>
+  </div>
+</div>
+
+<div class="container">
+    <h1>Procuring Entity Wise Estimated Cost & Contract Value Summary (All Packages including preparing stage)</h1>
+</div>
+
+<div class="container">
+  <table class="table table-bordered table-hover">
+      <thead>
+        <tr scope="row" class="table-active">
+          <th scope="col">Sl No</th>
+          <th scope="col">Procuring Entity Name</th>
+          <th scope="col">Estimated Value (Lakh Taka)</th>
+          <th scope="col">Contract Value (Lakh Taka)</th>
+          <th scope="col">Total Packages</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in pe_summary%}
+        <tr>
+          <td class="table-active">{{forloop.counter}}</td>
+          <td class="table-primary">{{item.pe__pe_name}}</td>
+          <td class="table-success">{{item.pe_estimate|floatformat:2}}</td>
+          <td class="table-info">{{item.pe_contract|floatformat:2}}</td>
+          <td class="table-warning">{{item.quantity}}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td class="table-active"></td>
+          <td class="table-primary">Summary</td>
+          <td class="table-success">{{peq.etotal|floatformat:2}}</td>
+          <td class="table-info">{{peq.ctotal|floatformat:2}}</td>
+          <td class="table-warning">{{peq.quantity}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <h1>Procuring Entity Wise Estimated Cost & Contract Value Summary (Awarded Packages Only)</h1>
+</div>
+
+<div class="container">
+  <table class="table table-bordered table-hover">
+      <thead>
+        <tr scope="row" class="table-active">
+          <th scope="col">Sl No</th>
+          <th scope="col">Procuring Entity Name</th>
+          <th scope="col">Estimated Value (Lakh Taka)</th>
+          <th scope="col">Contract Value (Lakh Taka)</th>
+          <th scope="col">Total Packages</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in pe_summary1%}
+        <tr>
+          <td class="table-active">{{forloop.counter}}</td>
+          <td class="table-primary">{{item.pe__pe_name}}</td>
+          <td class="table-success">{{item.pe_estimate|floatformat:2}}</td>
+          <td class="table-info">{{item.pe_contract|floatformat:2}}</td>
+          <td class="table-warning">{{item.quantity}}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td class="table-active"></td>
+          <td class="table-primary">Summary</td>
+          <td class="table-success">{{peq1.etotal|floatformat:2}}</td>
+          <td class="table-info">{{peq1.ctotal|floatformat:2}}</td>
+          <td class="table-warning">{{peq1.quantity}}</td>
+        </tr>
+
+      </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <h1>Sub-Project Wise Estimated Cost & Contract Value Summary (All packages)</h1>
+</div>
+
+<div class="container">
+  <table class="table table-bordered table-hover">
+      <thead>
+        <tr scope="row" class="table-active">
+          <th scope="col">Sl No</th>
+          <th scope="col">Sub_project Name</th>
+          <th scope="col">Estimated Value (Lakh Taka)</th>
+          <th scope="col">Contract Value (Lakh Taka)</th>
+          <th scope="col">Total Packages</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in sp_summary%}
+        <tr>
+          <td class="table-active">{{forloop.counter}}</td>
+          <td class="table-primary">{{item.sub_project__subproject_name}}</td>
+          <td class="table-success">{{item.sp_estimate|floatformat:2}}</td>
+          <td class="table-info">{{item.sp_contract|floatformat:2}}</td>
+          <td class="table-warning">{{item.quantity}}</td>
+        </tr>
+        {% endfor %}
+        <!-- <tr>
+          <td class="table-active"></td>
+          <td class="table-primary">Summary</td>
+          <td class="table-success">{{peq1.etotal|floatformat:2}}</td>
+          <td class="table-info">{{peq1.ctotal|floatformat:2}}</td>
+          <td class="table-warning">{{peq1.quantity}}</td>
+        </tr> -->
+
+      </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <h1>Sub-Project Wise Estimated Cost & Contract Value Summary (Awarded packages)</h1>
+</div>
+
+<div class="container">
+  <table class="table table-bordered table-hover">
+      <thead>
+        <tr scope="row" class="table-active">
+          <th scope="col">Sl No</th>
+          <th scope="col">Sub_project Name</th>
+          <th scope="col">Estimated Value (Lakh Taka)</th>
+          <th scope="col">Contract Value (Lakh Taka)</th>
+          <th scope="col">Total Packages</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in sp_summary1%}
+        <tr>
+          <td class="table-active">{{forloop.counter}}</td>
+          <td class="table-primary">{{item.sub_project__subproject_name}}</td>
+          <td class="table-success">{{item.sp_estimate|floatformat:2}}</td>
+          <td class="table-info">{{item.sp_contract|floatformat:2}}</td>
+          <td class="table-warning">{{item.quantity}}</td>
+        </tr>
+        {% endfor %}
+        <!-- <tr>
+          <td class="table-active"></td>
+          <td class="table-primary">Summary</td>
+          <td class="table-success">{{peq1.etotal|floatformat:2}}</td>
+          <td class="table-info">{{peq1.ctotal|floatformat:2}}</td>
+          <td class="table-warning">{{peq1.quantity}}</td>
+        </tr> -->
+
+      </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

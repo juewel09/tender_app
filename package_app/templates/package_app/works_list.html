@@ -1,0 +1,16 @@
+{% extends 'package_app/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1>All Types of Works Listed Below. Click any for view the packages under this work type</h1>
+      <h1>{{works.rnworks.all.count}}</h1>
+      <ol>
+        {% for items in works_list %}
+        <li><a href="{{items.id}}/">{{items.work_type}}</a> ####### Number of Packages under this catergory = {{items.rnworks.count}}</li>
+        {% endfor %}
+      </ol>
+
+
+    </div>
+  </div>
+{% endblock %}

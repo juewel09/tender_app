@@ -1,0 +1,15 @@
+{% extends 'package_app/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1>the subproject lists given below</h1>
+      <ol>
+        {% for items in subproject_list %}
+        <li><a href="{{items.id}}/">{{items.subproject_name}}</a>####### Number of Packages under this Subproject = {{items.rnsubproject.count}}</li>
+        {% endfor %}
+      </ol>
+
+
+    </div>
+  </div>
+{% endblock %}

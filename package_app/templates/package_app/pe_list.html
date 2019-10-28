@@ -1,0 +1,15 @@
+{% extends 'package_app/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1>The Procuring Entity lists given below</h1>
+      <ol>
+        {% for items in pe_list %}
+        <li><a href="{{items.id}}/">{{items.pe_name}}</a> Number of Packages under this PE = {{items.rnpe.count}}</li>
+        {% endfor %}
+      </ol>
+
+
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'package_app/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Name of Contractor: {{contractor.contractor_name}} </h1>
+      <h4> Address : {{contractor.address}}</h4>
+      <h4> E-mail : {{contractor.email}}</h4>
+      <h4> Contact No : {{contractor.mobile}}</h4>
+      <p>
+
+
+      </p>
+      <h2>Details of packages under the Contractor: {{contractor.contractor_name}} is below- </h2>
+
+      {% if contractor.rncontractor.all %}
+
+      <ol>
+        {% for items in contractor.rncontractor.all %}
+
+        <h5><li>Package No: {{items.package_no}}</li></h5>
+        <ul>
+          <li>Package No: {{items.package_no}}</li>
+          <li>Package Name:{{items.package_name}} </li>
+          <li>Estimated Cost: {{items.estimate_value}} BDT</li>
+          <li>Contract Value: {{items.contract_value}} BDT</li>
+          <li>Name of Contractor: {{items.contractor_name}}</li>
+          <li>Less or Above: {{items.less_above}}</li>
+          <li>Bill Paid: {{items.total_expense}} BDT</li>
+        </ul>
+        {% endfor %}
+      </ol>
+      {% else %}
+        <h1> No data found for {{subproject.subproject_name}}</h1>
+    </div>
+  </div>
+      {% endif %}
+
+
+{% endblock %}

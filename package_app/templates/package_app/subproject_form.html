@@ -1,0 +1,27 @@
+{% extends 'package_app/base.html' %}
+
+{% load bootstrap4 %}
+
+{% block body_block %}
+
+<h1>
+  {% if not form.instances.pk %}
+  Create Subproject
+  {% else %}
+  Update Subproject
+  {%endif%}
+</h1>
+
+<div class="container">
+  {% if user.is_authenticated %}
+    <form method="post">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <input type="submit" name="" value="Submit">
+    </form>
+  {% else %}
+    <h1>Please login for update/create data</h1>
+  {% endif %}
+</div>
+
+{% endblock %}

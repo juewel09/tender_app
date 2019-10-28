@@ -1,0 +1,12 @@
+{% extends "package_app/base.html" %}
+
+{% load bootstrap4 %}
+
+{% block body_block %}
+<h4>Create New Bill Details</h4>
+<form method="POST" action="{% url 'package_app:billcreate' %}">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	<button type="submit" class="btn btn-primary btn-large">Post</button>
+</form>
+{% endblock %}

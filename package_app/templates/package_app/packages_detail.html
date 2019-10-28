@@ -1,0 +1,146 @@
+{% extends 'package_app/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+
+    <h1>Basic Information of Package No: {{packages.package_no}}</h1>
+  </div>
+</div>
+<div class="container">
+    <table class="table table-bordered table-hover">
+      <tr >
+        <th scope="row" class="table-active">Package Name</th>
+        <td>{{packages.package_name}}</td>
+      </tr>
+      <tr >
+        <th class="table-primary" scope="row">Types of Works</th>
+        <td>{{packages.works}}</td>
+      </tr>
+      <tr >
+        <th class="table-active" scope="row">Procuring Entity</th>
+        <td>{{packages.pe}}</td>
+      </tr>
+      <tr >
+        <th class="table-primary" scope="row">Sub-Project</th>
+        <td>{{packages.sub_project}}</td>
+      </tr>
+      <tr >
+        <th class="table-active" scope="row">Estimated Cost</th>
+        <td>{{packages.estimate_value}} BDT</td>
+      </tr>
+      <tr >
+        <th class="table-primary" scope="row">Contract Value</th>
+        {% if packages.variation_value != 0 %}
+          <td>{{packages.total_cont_value}} BDT</td>
+        {% else %}
+          <td>{{packages.contract_value}} BDT</td>
+        {% endif %}
+      </tr>
+      <tr >
+        <th class="table-active" scope="row">Name of Contractor</th>
+        <td>{{packages.contractor_name}}</td>
+      </tr>
+      <tr >
+        <th class="table-primary" scope="row">Less or Above</th>
+        <td>{{packages.less_above}}</td>
+      </tr>
+      <tr >
+        <th class="table-active" scope="row">Bill Paid</th>
+        <td>{{packages.total_expense}} BDT</td>
+      </tr>
+
+    </table>
+    <div class="d-flex justify-content-end">
+      <a href="{% url 'package_app:packcreate' %}"><button type="button" class="btn btn-primary">Create New Package</button></a>
+      <a href="{% url 'package_app:packageupdate' pk=packages.pk %}"><button type="button" class="btn btn-warning">Update Package</button></a>
+    </div>
+
+</div>
+
+  <div class="container">
+    <div class="jumbotron">
+      <h2>Details of Bill Paid of Pacakge No: {{packages.package_no}} is below- </h2>
+      {% if packages.rnbill.all %}
+      <div class="container">
+        <div class="col-md-6">
+          <table class="table table-bordered table-hover">
+              <thead>
+                <tr scope="row" class="table-primary">
+                  <th scope="col">Bill Type</th>
+                  <th scope="col">Bill Date</th>
+                  <th scope="col">Amount (BDT)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in packages.rnbill.all %}
+                <tr>
+                  <td class="table-success">{{item.bill_type}}</td>
+                  <td class="table-warning">{{item.bill_date}}</td>
+                  <td class="table-danger">{{item.bill_amount|floatformat:2}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                  <td class="table-success">Summary</td>
+                  <td class="table-warning"></td>
+                  <td class="table-danger">{{packages.total_expense|floatformat:2}}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+      </div>
+
+    {% else %}
+      <h3> No Bill data found </h3>
+    {% endif %}
+
+      <div class="d-flex justify-content-end">
+        <a href="{% url 'package_app:billcreate' %}"><button type="button" class="btn btn-info">Create New Bill</button></a>
+
+      </div>
+   </div>
+  </div>
+
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Details of Dates related to package no  {{packages.package_no}} is below: </h1>
+
+      {% if packages.rnpackages.all %}
+
+
+        {% for items in packages.rnpackages.all %}
+
+        <ul>
+          <li>APP Approval Date: {{items.app_date}}</li>
+          <li>IFT Publish Date: {{items.ift_date}}</li>
+          <li>Tender Opening Dates: {{items.opening_date}}</li>
+          <li>Tender Closing Date : {{items.evaluation_submission_date}}</li>
+          <li>Evaluation Submission Date to PD: {{items.ift_date}}</li>
+          <li>Evaluation approval Date by PD: {{items.ift_date}}</li>
+          <li>ADB Concurrence Date: {{items.adb_concurrence_date}}</li>
+          <li>Date of Issuance of NOA by PE: {{items.noa_date}}</li>
+          <li>Date of Contract Signing: {{items.contract_sign_date}}</li>
+          <li>Start Date as per Work Order: {{items.start_date}}</li>
+          <li>Completion Date as per Work Order: {{items.end_date}}</li>
+            {% if items.end_date_extension %}
+              <li> Completion Date as per Time Extentions = {{items.end_date_extension}}</li>
+            {% else %}
+              <h6>No Time Extension required for the package yet.</h6>
+            {% endif %}
+          <li>Actual Completion Date: {{items.end_date_actual}}</li>
+
+        </ul>
+        {% endfor %}
+
+      {% else %}
+        <h1> No date data found for {{packages.package_no}}</h1>
+      {% endif %}
+      <div class="d-flex justify-content-end">
+        <a href="{% url 'package_app:packdatecreate' %}"><button type="button" class="btn btn-secondary">Create Package Dates</button></a>
+        <a href="{% url 'package_app:packagedateupdate' pk=packages.pk %}"><button type="button" class="btn btn-warning">Update Package</button></a>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

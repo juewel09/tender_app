@@ -1,0 +1,60 @@
+{% extends 'package_app/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <select class='subproject'>
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </select>
+
+    <select class='worktype'>
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </select>
+
+    <div class="jumbotron">
+      <h1>Details of packages under Procuring Entity: {{pe.pe_name}} is below- </h1>
+
+      {% if pe.rnpe.all %}
+
+      <ol>
+        {% for items in pe.rnpe.all %}
+
+        <h5><li>Package No: {{items.package_no}}</li></h5>
+        <ul>
+          <li>Package No: {{items.package_no}}</li>
+          <li>Package Name:{{items.package_name}} </li>
+          <li>Estimated Cost: {{items.estimate_value}} BDT</li>
+          <li>Contract Value: {{items.contract_value}} BDT</li>
+          <li>Name of Contractor: {{items.contractor_name}}</li>
+          <li>Less or Above: {{items.less_above}}</li>
+          <li>Bill Paid: {{items.total_expense}} BDT</li>
+        </ul>
+        {% endfor %}
+      </ol>
+      {% else %}
+        <h1> No data found for {{subproject.subproject_name}}</h1>
+    </div>
+  </div>
+      {% endif %}
+
+      <!-- <script type="text/javascript">
+        $(".subproject").click(function(){
+          var subproject_ajax = $(this).val();
+        $.ajax({
+                  method: 'GET',
+                  url: '/product/get_subcategories',
+                  data: {'subproject_jango' : subproject_ajax},
+                  success: function(response){
+                     // DO SOMETHING
+                     $('.jumbotron').html(response);
+                  },
+                  error: function(jqXHR, textStatus, errorThrown) { }
+            });
+      });
+      </script> -->
+
+{% endblock %}
