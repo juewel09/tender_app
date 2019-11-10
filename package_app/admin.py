@@ -8,4 +8,6 @@ admin.site.register(Contractor)
 admin.site.register(Packages)
 admin.site.register(PackageDates)
 admin.site.register(BillName)
-admin.site.register(Bill)
+@admin.register(Bill)
+class BillAdmin(admin.ModelAdmin):
+    list_display = ('package_no', 'bill_type', 'bill_amount','bill_date')

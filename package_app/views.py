@@ -13,29 +13,25 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class SubprojectListView(ListView):
     model=models.Subproject
 
-class SubprojectDetailView(LoginRequiredMixin,DetailView):
-    login_url = 'accounts:login'
+class SubprojectDetailView(DetailView):
     model=models.Subproject
     template_name = 'package_app/subproject_detail.html'
 
 class WorksListView(ListView):
     model=models.Works
-class WorksDetailView(LoginRequiredMixin,DetailView):
-    login_url = 'accounts:login'
+class WorksDetailView(DetailView):
     model=models.Works
     template_name = 'package_app/works_detail.html'
 
 class PEListView(ListView):
     model=models.PE
-class PEDetailView(LoginRequiredMixin,DetailView):
-    login_url = 'accounts:login'
+class PEDetailView(DetailView):
     model=models.PE
     template_name = 'package_app/pe_detail.html'
 
 class ContractorListView(ListView):
     model=models.Contractor
-class ContractorDetailView(LoginRequiredMixin,DetailView):
-    login_url = 'accounts:login'
+class ContractorDetailView(DetailView):
     model=models.Contractor
     template_name = 'package_app/contractor_detail.html'
 
@@ -44,8 +40,7 @@ class PackagesListView(ListView):
     # paginate_by = 25
 
 
-class PackagesDetailView(LoginRequiredMixin,DetailView):
-    login_url = 'accounts:login'
+class PackagesDetailView(DetailView):
     model=models.Packages
     template_name = 'package_app/packages_detail.html'
 
@@ -84,6 +79,8 @@ class PackageDatesUpdateView(LoginRequiredMixin,UpdateView):
     fields ='__all__'
     model = models.PackageDates
 
+class BillListView(ListView):
+    model=models.Bill
 
 class BillCreateView(LoginRequiredMixin,CreateView):
     login_url = 'accounts:login'
@@ -96,18 +93,21 @@ class BillCreateView(LoginRequiredMixin,CreateView):
         self.object.save()
         return super().form_valid(form)
 
-
-class SubprojectCreateView(LoginRequiredMixin,CreateView):
+class BillUpdateView(LoginRequiredMixin,UpdateView):
     login_url = 'accounts:login'
+    redirect_field_name = 'package_app/packages_detail.html'
+    model=models.Bill
+    fields = '__all__'
+
+
+class SubprojectCreateView(CreateView):
     model=models.Subproject
     fields = ('subproject_name', 'district_name','area')
 
-class SubprojectUpdateView(LoginRequiredMixin,UpdateView):
-    login_url = 'accounts:login'
+class SubprojectUpdateView(UpdateView):
     model=models.Subproject
     fields = ('subproject_name', 'district_name','area')
 
-class SubprojectDeleteeView(LoginRequiredMixin,DeleteView):
-    login_url = 'accounts:login'
+class SubprojectDeleteeView(DeleteView):
     model=models.Subproject
     success_url = reverse_lazy("package_app:splist")

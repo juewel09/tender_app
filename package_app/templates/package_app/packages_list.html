@@ -7,10 +7,10 @@
       <a href="{% url 'package_app:packcreate' %}"><button type="button" class="btn btn-primary">Create New Package</button></a>
 
     </div>
-  
+
   <div class="container">
     {% regroup packages_list by sub_project as sub_project_list %}
-
+  
     <ul>
     {% for sub_project in sub_project_list %}
         <h3>{{ sub_project.grouper }}: Sub-Project contains below Packages</h3>

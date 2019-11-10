@@ -1,5 +1,8 @@
 from django.db import models
 from django.urls import reverse
+import datetime
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class PE (models.Model):
     pe_name = models.CharField(max_length=100, unique=True, help_text='Enter PE Name')
@@ -95,6 +98,27 @@ class PackageDates (models.Model):
 
     def __str__(self):
         return str(self.package_no)
+
+    def clean(self):
+        if self.ift_date is not None and self.ift_date >= self.opening_date:
+            raise ValidationError({'opening_date':
+            _('Tender Opening Date should be greater than tender publish date')})
+        if self.opening_date is not None and self.opening_date > self.evaluation_submission_date:
+            raise ValidationError({'evaluation_submission_date':
+            _('Evaluation Submission Date should be greater than tender opening date')})
+        if self.evaluation_submission_date is not None and self.evaluation_submission_date > self.evaluation_approval_date:
+            raise ValidationError({'evaluation_approval_date':
+            _('Evaluation Approval Date should be equal or greater than Evaluation Submission date')})
+        if self.noa_date is not None and self.noa_date > self.contract_sign_date:
+            raise ValidationError({'contract_sign_date':
+            _('Contract Signing Date should be equal or greater than NOA date')})
+        if self.contract_sign_date is not None and self.contract_sign_date > self.start_date:
+            raise ValidationError({'start_date':
+            _('Contract Start Date should be equal or greater than Contract Signing date')})
+        if self.start_date is not None and self.start_date >= self.end_date:
+            raise ValidationError({'end_date':
+            _('Work Completion Date should be greater Work Start date')})
+
     def get_absolute_url(self):
         return reverse("package_app:packagesdetail",kwargs={'pk':self.package_no.pk})
 
@@ -110,6 +134,19 @@ class Bill (models.Model):
     bill_type = models.ForeignKey(BillName, on_delete=models.CASCADE)
     bill_date = models.DateField(null=True, blank=True, help_text='Enter the Actual Bill payment date')
     bill_amount = models.FloatField(default=0, help_text='Enter the amount of the bill')
+    FY = models.CharField(max_length=9, default='xxxx-xxxx',help_text='Enter the Package Number')
+
+    class Meta:
+        ordering=['bill_type']
+
+    def save(self, *args, **kwargs):
+        if int((self.bill_date.strftime("%m"))) <= 6 :
+            fy = str((int(self.bill_date.strftime("%Y"))-1)) + '-' +(self.bill_date.strftime("%Y"))
+            self.FY = fy
+        else:
+            fy = (self.bill_date.strftime("%Y")) + '-' + str((int(self.bill_date.strftime("%Y"))+1))
+            self.FY = fy
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.package_no)

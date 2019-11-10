@@ -4,7 +4,7 @@
 
 {% block body_block %}
 <h4>Create New Bill Details</h4>
-<form method="POST" action="{% url 'package_app:billcreate' %}">
+<form method="POST">
 	{% csrf_token %}
 	{% bootstrap_form form %}
 	<button type="submit" class="btn btn-primary btn-large">Post</button>

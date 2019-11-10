@@ -1,0 +1,16 @@
+{% extends 'package_app/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1>The total Bill List Given below-</h1>
+      <ol>
+        {% for items in bill_list %}
+        <li>Package No: {{items.package_no}} === Bill type: {{items.bill_type}} === Bill Amount: {{items.bill_amount}} == Bill Date = {{items.bill_date}}###  Fianancial Year = {{items.FY}}</li>
+          <a href="{% url 'package_app:billupdate' pk=items.pk %}"><button type="button" class="btn btn-warning">Update Bill</button></a>
+        {% endfor %}
+      </ol>
+
+
+    </div>
+  </div>
+{% endblock %}

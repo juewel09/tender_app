@@ -2,7 +2,6 @@
 {% block body_block %}
   <div class="container">
     <div class="jumbotron">
-
     <h1>Basic Information of Package No: {{packages.package_no}}</h1>
   </div>
 </div>
@@ -26,14 +25,14 @@
       </tr>
       <tr >
         <th class="table-active" scope="row">Estimated Cost</th>
-        <td>{{packages.estimate_value}} BDT</td>
+        <td>{{packages.estimate_value|floatformat:2}} BDT</td>
       </tr>
       <tr >
         <th class="table-primary" scope="row">Contract Value</th>
         {% if packages.variation_value != 0 %}
-          <td>{{packages.total_cont_value}} BDT</td>
+          <td>{{packages.total_cont_value|floatformat:2}} BDT</td>
         {% else %}
-          <td>{{packages.contract_value}} BDT</td>
+          <td>{{packages.contract_value|floatformat:2}} BDT</td>
         {% endif %}
       </tr>
       <tr >
@@ -46,29 +45,29 @@
       </tr>
       <tr >
         <th class="table-active" scope="row">Bill Paid</th>
-        <td>{{packages.total_expense}} BDT</td>
+        <td>{{packages.total_expense|floatformat:2}} BDT</td>
       </tr>
-
     </table>
     <div class="d-flex justify-content-end">
       <a href="{% url 'package_app:packcreate' %}"><button type="button" class="btn btn-primary">Create New Package</button></a>
       <a href="{% url 'package_app:packageupdate' pk=packages.pk %}"><button type="button" class="btn btn-warning">Update Package</button></a>
     </div>
-
 </div>
-
   <div class="container">
     <div class="jumbotron">
       <h2>Details of Bill Paid of Pacakge No: {{packages.package_no}} is below- </h2>
       {% if packages.rnbill.all %}
       <div class="container">
-        <div class="col-md-6">
+        <div class="col-md-7">
           <table class="table table-bordered table-hover">
               <thead>
                 <tr scope="row" class="table-primary">
                   <th scope="col">Bill Type</th>
                   <th scope="col">Bill Date</th>
                   <th scope="col">Amount (BDT)</th>
+                {% if user.is_authenticated %}
+                  <th scope="col">Click Below</th>
+                {% endif %}
                 </tr>
               </thead>
               <tbody>
@@ -77,6 +76,11 @@
                   <td class="table-success">{{item.bill_type}}</td>
                   <td class="table-warning">{{item.bill_date}}</td>
                   <td class="table-danger">{{item.bill_amount|floatformat:2}}</td>
+                {% if user.is_authenticated %}
+                  <td class="table-info">
+                    <a href="{% url 'package_app:billupdate' pk=item.pk %}">Update</a>
+                  </td>
+                {% endif %}
                 </tr>
                 {% endfor %}
                 <tr>
@@ -87,60 +91,108 @@
               </tbody>
             </table>
         </div>
-
       </div>
-
     {% else %}
       <h3> No Bill data found </h3>
     {% endif %}
-
       <div class="d-flex justify-content-end">
         <a href="{% url 'package_app:billcreate' %}"><button type="button" class="btn btn-info">Create New Bill</button></a>
 
       </div>
    </div>
   </div>
-
   <div class="container">
     <div class="jumbotron">
       <h1>Details of Dates related to package no  {{packages.package_no}} is below: </h1>
-
       {% if packages.rnpackages.all %}
-
-
-        {% for items in packages.rnpackages.all %}
-
-        <ul>
-          <li>APP Approval Date: {{items.app_date}}</li>
-          <li>IFT Publish Date: {{items.ift_date}}</li>
-          <li>Tender Opening Dates: {{items.opening_date}}</li>
-          <li>Tender Closing Date : {{items.evaluation_submission_date}}</li>
-          <li>Evaluation Submission Date to PD: {{items.ift_date}}</li>
-          <li>Evaluation approval Date by PD: {{items.ift_date}}</li>
-          <li>ADB Concurrence Date: {{items.adb_concurrence_date}}</li>
-          <li>Date of Issuance of NOA by PE: {{items.noa_date}}</li>
-          <li>Date of Contract Signing: {{items.contract_sign_date}}</li>
-          <li>Start Date as per Work Order: {{items.start_date}}</li>
-          <li>Completion Date as per Work Order: {{items.end_date}}</li>
-            {% if items.end_date_extension %}
-              <li> Completion Date as per Time Extentions = {{items.end_date_extension}}</li>
-            {% else %}
-              <h6>No Time Extension required for the package yet.</h6>
-            {% endif %}
-          <li>Actual Completion Date: {{items.end_date_actual}}</li>
-
-        </ul>
-        {% endfor %}
-
+      <div class="container">
+        <div class="col-md-8">
+          <table class="table table-bordered table-hover">
+              <thead>
+                <tr scope="row" class="table-danger">
+                  <th scope="col">Sl No</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for items in packages.rnpackages.all %}
+                <tr class="table-success">
+                  <td>1</td>
+                  <td>APP Approval Date</td>
+                  <td>{{items.app_date}}</td>
+                </tr>
+                <tr class="table-primary">
+                  <td>2</td>
+                  <td>IFT Publish Date</td>
+                  <td>{{items.ift_date}}</td>
+                </tr>
+                <tr class="table-success">
+                  <td>3</td>
+                  <td>Tender Opening Date</td>
+                  <td>{{items.opening_date}}</td>
+                </tr>
+                <tr class="table-primary">
+                  <td>4</td>
+                  <td>Evaluation Report Submission Date</td>
+                  <td>{{items.evaluation_submission_date}}</td>
+                </tr>
+                <tr class="table-success">
+                  <td>5</td>
+                  <td>Evaluation Approval Date</td>
+                  <td>{{items.evaluation_approval_date}}</td>
+                </tr>
+                <tr class="table-primary">
+                  <td>6</td>
+                  <td>ADB Concurrence Date</td>
+                  <td>{{items.adb_concurrence_date}}</td>
+                </tr>
+                <tr class="table-success">
+                  <td>7</td>
+                  <td>NOA Date</td>
+                  <td>{{items.noa_date}}</td>
+                </tr>
+                <tr class="table-primary">
+                  <td>8</td>
+                  <td>Contract Sigining Date</td>
+                  <td>{{items.contract_sign_date}}</td>
+                </tr>
+                <tr class="table-success">
+                  <td>9</td>
+                  <td>Work Start Date</td>
+                  <td>{{items.start_date}}</td>
+                </tr>
+                <tr class="table-primary">
+                  <td>10</td>
+                  <td>Work Completion Date</td>
+                  <td>{{items.end_date}}</td>
+                </tr>
+                <tr class="table-success">
+                  <td>11</td>
+                  <td>Completion Date as per Time Extension</td>
+                  {% if items.end_date_extension %}
+                    <td>{{items.end_date_extension}}</td>
+                  {% else %}
+                    <td>No Time Extension yet.</td>
+                  {% endif %}
+                </tr>
+                <tr class="table-primary">
+                  <td>10</td>
+                  <td>Actual Completion Date</td>
+                  <td>{{items.end_date_actual}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+      </div>
       {% else %}
         <h1> No date data found for {{packages.package_no}}</h1>
       {% endif %}
       <div class="d-flex justify-content-end">
         <a href="{% url 'package_app:packdatecreate' %}"><button type="button" class="btn btn-secondary">Create Package Dates</button></a>
-        <a href="{% url 'package_app:packagedateupdate' pk=packages.pk %}"><button type="button" class="btn btn-warning">Update Package</button></a>
+        <a href="{% url 'package_app:packagedateupdate' pk=packages.pk %}"><button type="button" class="btn btn-warning">Update Package Date</button></a>
       </div>
     </div>
   </div>
-
-
 {% endblock %}
