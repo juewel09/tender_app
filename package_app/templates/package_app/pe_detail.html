@@ -32,6 +32,8 @@
           <li>Name of Contractor: {{items.contractor_name}}</li>
           <li>Less or Above: {{items.less_above}}</li>
           <li>Bill Paid: {{items.total_expense}} BDT</li>
+          <a href="{% url 'package_app:packagesdetail' pk=items.pk%}"><button type="button" class="btn btn-primary">More Details</button></a>
+
         </ul>
         {% endfor %}
       </ol>
