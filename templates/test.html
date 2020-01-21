@@ -20,7 +20,7 @@
     <script>
       Highcharts.chart('container', {{ chart|safe }});
     </script>
-  
+
 
 <div class="container">
     <table class="table table-bordered table-hover">
@@ -57,7 +57,7 @@
 </div>
 
 <div class="container">
-    <h1>Procuring Entity Wise Estimated Cost & Contract Value Summary (Awarded Packages Only)</h1>
+    <h3>Procuring Entity Wise Estimated Cost & Contract Value Summary (Awarded Packages Only)</h3>
 </div>
 <div id="container1"></div>
   <script>
@@ -98,7 +98,7 @@
 </div>
 
 <div class="container">
-    <h1>Sub-Project Wise Estimated Cost & Contract Value Summary (All packages)</h1>
+    <h3>Sub-Project Wise Estimated Cost & Contract Value Summary (All packages)</h3>
 </div>
 
 <div class="container">
@@ -135,7 +135,7 @@
 </div>
 
 <div class="container">
-    <h1>Sub-Project Wise Estimated Cost & Contract Value Summary (Awarded packages)</h1>
+    <h3>Sub-Project Wise Estimated Cost & Contract Value Summary (Awarded packages)</h3>
 </div>
 
 <div class="container">
@@ -163,5 +163,8 @@
       </tbody>
     </table>
 </div>
-
+{{expense}}
+<!-- {%for item in expense%}
+  <li>{{item.package_no__works__work_type }}: {{item.FY }} : {{item.total}}</li>
+{%endfor%} -->
 {% endblock %}

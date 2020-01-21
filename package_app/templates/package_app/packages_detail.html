@@ -191,7 +191,9 @@
       {% endif %}
       <div class="d-flex justify-content-end">
         <a href="{% url 'package_app:packdatecreate' %}"><button type="button" class="btn btn-secondary">Create Package Dates</button></a>
-        <a href="{% url 'package_app:packagedateupdate' pk=packages.pk %}"><button type="button" class="btn btn-warning">Update Package Date</button></a>
+          {% for items in packages.rnpackages.all %}
+          <a href="{% url 'package_app:packagedateupdate' pk=items.pk %}"><button type="button" class="btn btn-warning">Update Package Date</button></a>
+          {% endfor %}
       </div>
     </div>
   </div>

@@ -7,7 +7,7 @@ class PackageDatesCreateForm(forms.ModelForm):
         model = PackageDates
         fields = '__all__'
 
-        widgets = {
+        widgets ={
             'app_date': forms.DateInput(format=('%m/%d/%Y'),
             attrs={'class':'form-control', 'placeholder':'Select a date', 'type':'date'}),
             'ift_date': forms.DateInput(format=('%m/%d/%Y'),

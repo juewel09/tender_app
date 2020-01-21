@@ -76,8 +76,9 @@ class PackageDatesCreateView(LoginRequiredMixin,CreateView):
 class PackageDatesUpdateView(LoginRequiredMixin,UpdateView):
     login_url = 'accounts:login'
     redirect_field_name = 'package_app/packages_detail.html'
-    fields ='__all__'
     model = models.PackageDates
+    fields = '__all__'
+
 
 class BillListView(ListView):
     model=models.Bill
@@ -97,7 +98,7 @@ class BillUpdateView(LoginRequiredMixin,UpdateView):
     login_url = 'accounts:login'
     redirect_field_name = 'package_app/packages_detail.html'
     model=models.Bill
-    fields = '__all__'
+    fields = 'bill_type','bill_date','bill_amount'
 
 
 class SubprojectCreateView(CreateView):
